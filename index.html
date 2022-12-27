@@ -1,122 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
-
-	<head>
-		<meta charset="UTF-8">
-		<title>Stocks API</title>
-		<!-- link to bootstrap cdn -->
-		<link
-			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
-			rel="stylesheet"
-			integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
-			crossorigin="anonymous">
-		<!-- link to your stylesheet -->
-		<link rel="stylesheet" href="styles.css">
-	</head>
-
-	<body>
-		<div class="card bg-light mb-3">
-			<div class="card-header">
-				<h1 class="card-title">Stocks API</h1>
-			</div>
-			<div id="symbol" class="card-text" style="
-    color: #f8f9fa;
-    outline-style: solid;
-    background-color: #0a58ca;
-    display: flex;
-    justify-content: space-around;
-    align-items: baseline;
-    padding: 1em;
-    position: sticky;
-	visibility: hidden;
-"></div>
-			<div class="card-body">
-				<form id="stock-form" class="form-inline">
-					<div class="form-group mb-2">
-						<label for="symbol-input" class="sr-only">Symbol</label>
-						<input id="symbol-input" type="text" name="symbol"
-							class="form-control mr-2"
-							placeholder="Enter symbol (e.g. AAPL)">
-					</div>
-					<button type="submit" id="submit-button"
-						class="btn btn-primary mb-2">Submit</button>
-				</form>
-				<h2 class="card-subtitle mb-2 text-muted">Current Price</h2>
-				<div id="symbol" class="card-text"></div>
-				<div id="price" class="card-text"></div>
-				<h2 class="card-subtitle mb-2 text-muted">Open Price</h2>
-				<div id="open-price" class="card-text"></div>
-				<h2 class="card-subtitle mb-2 text-muted">High Price</h2>
-				<div id="high-price" class="card-text"></div>
-				<h2 class="card-subtitle mb-2 text-muted">Low Price</h2>
-				<div id="low-price" class="card-text"></div>
-				<h2 class="card-subtitle mb-2 text-muted">Volume</h2>
-				<div id="volume" class="card-text"></div>
-				<h2 class="card-subtitle mb-2 text-muted">Latest Trading Day
-				</h2>
-				<div id="latest-trading-day" class="card-text"></div>
-				<h2 class="card-subtitle mb-2 text-muted">Previous Close</h2>
-				<div id="previous-close" class="card-text"></div>
-				<h2 class="card-subtitle mb-2 text-muted">Change</h2>
-				<div id="change" class="card-text"></div>
-				<h2 class="card-subtitle mb-2 text-muted">Change Percent</h2>
-				<div id="change-percent" class="card-text"></div>
-			</div>
+<head>
+	<title>Stocks API</title>
+	<link href="styles.css" rel="stylesheet">
+	<link href="bootstrap.min.cs" rel="stylesheet">
+</head>
+<body>
+	<div class="card bg-light mb-3">
+		<div class="card-header">
+			<h1 class="card-title">Stocks API</h1>
 		</div>
-		<script>
-			const apiKey = '{api_key}';
-			const fn = 'GLOBAL_QUOTE';
-			// declare function getStock with parameter a
-			async function getStock(a) {// get stock price from Alpha Vantage API
-				const b = await fetch(
-					`https://www.alphavantage.co/query?function=${fn}&symbol=${a}&apikey=${apiKey}`
-				);
-				// convert response to json
-				const c = await b.json();
-				// get global quote from API response
-				const d = c['Global Quote'];
-				// log API response to console
-				console.log(d);
-				// get element with id symbol and price
-				const e = document.getElementById('symbol');
-				const f = document.getElementById('price');
-				const openPrice = d['02. open'];
-				const highPrice = d['03. high'];
-				const lowPrice = d['04. low'];
-				const volume = d['06. volume'];
-				const latestTradingDay = d['07. latest trading day'];
-				const previousClose = d['08. previous close'];
-				const change = d['09. change'];
-				const changePercent = d['10. change percent'];
-				// set symbol and price variables to API response
-				e.innerHTML = d['01. symbol'], f.innerHTML = d['05. price'];
-				document.getElementById('open-price').innerHTML = openPrice;
-				document.getElementById('high-price').innerHTML = highPrice;
-				document.getElementById('low-price').innerHTML = lowPrice;
-				document.getElementById('volume').innerHTML = volume;
-				document.getElementById('latest-trading-day').innerHTML = latestTradingDay;
-				document.getElementById('previous-close').innerHTML = previousClose;
-				document.getElementById('change').innerHTML = change;
-				document.getElementById('change-percent').innerHTML = changePercent;
-			};
-
-			// This function takes in a symbol and then creates an API call to the Alpha Vantage API to get the data
-			// It then calls the function to display the data on the page
-			document.getElementById('submit-button').addEventListener('click', (a) => {
-				a.preventDefault();
-				const b = document.getElementById('symbol-input').value;
-				getStock(b);
-			});
-
-			// This function takes in a symbol and then creates an API call to the Alpha Vantage API to get the data
-			// It then calls the function to display the data on the page
-			document.getElementById('stock-form').addEventListener('submit', (a) => {
-				a.preventDefault();
-				const b = document.getElementById('symbol-input').value;
-				getStock(b);
-			});
-		</script>
-		<script src="script.js"></script>
-	</body>
-
+		<div class="card-text" id="symbol" style=
+		"color: #f8f9fa; outline-style: solid; background-color: #0a58ca; display: flex; justify-content: space-around; align-items: baseline; padding: 1em; position: sticky;">
+		</div>
+		<div class="card-body">
+			<form class="form-inline" id="stock-form" name="stock-form">
+				<div class="form-group mb-2">
+					<label class="sr-only" for="symbol-input">Symbol</label> <input class=
+					"form-control mr-2" id="symbol-input" name="symbol" placeholder=
+					"Enter symbol (e.g. AAPL)" type="text">
+				</div><button class="btn btn-primary mb-2" id="submit-button" type=
+				"submit">Submit</button>
+			</form>
+			<h2 class="card-subtitle mb-2 text-muted">Current Price</h2>
+			<div class="card-text" id="symbol"></div>
+			<div class="card-text" id="price"></div>
+			<h2 class="card-subtitle mb-2 text-muted">Open Price</h2>
+			<div class="card-text" id="open-price"></div>
+			<h2 class="card-subtitle mb-2 text-muted">Low Price</h2>
+			<div class="card-text" id="low-price"></div>
+			<h2 class="card-subtitle mb-2 text-muted">Volume</h2>
+			<div class="card-text" id="volume"></div>
+			<h2 class="card-subtitle mb-2 text-muted">Latest Trading Day</h2>
+			<div class="card-text" id="latest-trading-day"></div>
+			<h2 class="card-subtitle mb-2 text-muted">Previous Close</h2>
+			<div class="card-text" id="previous-close"></div>
+			<h2 class="card-subtitle mb-2 text-muted">Change</h2>
+			<div class="card-text" id="change"></div>
+			<h2 class="card-subtitle mb-2 text-muted">Change Percent</h2>
+			<div class="card-text" id="change-percent"></div>
+		</div>
+	</div>
+	<script src="script.js">
+	</script>
+</body>
 </html>
